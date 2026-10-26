@@ -53,7 +53,6 @@ def fmt_time(seconds):
 
 
 def submit_and_show(f, answers):
-    """Send answers once and print the result. Safe to call from two threads."""
     global submitted
     with lock:
         if submitted:
@@ -89,7 +88,7 @@ def run_exam(f, student_id):
             submit_and_show(f, answers)
         except (ConnectionError, OSError, RuntimeError, ValueError) as e:
             print("Could not submit:", e)
-        os._exit(0)  # stop the main thread even if it is waiting on input()
+        os._exit(0)  
 
     timer = threading.Timer(duration, on_timeout)
     timer.daemon = True
@@ -128,7 +127,7 @@ def main():
     print(f"Connecting to {args.host}:{args.port} ...")
     try:
         sock = socket.create_connection((args.host, args.port), timeout=CONNECT_TIMEOUT)
-        sock.settimeout(None)  # no timeout once connected (student may think for a while)
+        sock.settimeout(None)  
     except ConnectionRefusedError:
         print("Could not connect: the server is not running or the port is wrong.")
         return
