@@ -1,2 +1,2 @@
-# online-examination-network
-examination portal using tcp connection
+# ONLINE EXAMINATION NETWORK
+Designing an exam portal with updating through TCP
