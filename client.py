@@ -68,14 +68,14 @@ def submit_and_show(f, answers):
 
 
 def run_exam(f, student_id):
-    send(f, {"type": "hello", "student_id": student_id})
+   
     print("Status: connected, waiting for questions...")
 
     msg = recv(f)
     if msg.get("type") != "questions":
         raise RuntimeError(f"Unexpected message from server: {msg}")
 
-    items = msg["items"]
+    items = msg["questions"]
     duration = msg.get("duration", DEFAULT_DURATION)
     deadline = time.time() + duration
     answers = {}
@@ -96,7 +96,7 @@ def run_exam(f, student_id):
 
     for q in items:
         print(f"\n[Time left: {fmt_time(deadline - time.time())}]")
-        print(f"Q{q['id']}. {q['text']}")
+        print(f"Q{q['id']}. {q['question']}")
         for opt in q["options"]:
             print("   ", opt)
         while True:
